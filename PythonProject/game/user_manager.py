@@ -57,6 +57,7 @@ class UserManager:
         user = self.get_user(user_id)
         user["current_scene"] = scene_id
 
+
         if "inventory_add" in scene_data:
             user["inventory"].extend(scene_data["inventory_add"])
         if "inventory_remove" in scene_data:

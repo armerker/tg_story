@@ -4,9 +4,7 @@ from game.user_manager import UserManager
 from game.quest_data import QUEST_SCENES
 from bot.keyboards import get_scene_keyboard
 
-
 REGISTER_NAME = 1
-
 user_manager = UserManager()
 
 
@@ -17,7 +15,7 @@ async def start_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     if not user["registered"]:
         await update.message.reply_text(
-            "Добро пожаловать в QuestChronicle!\n\n"
+            "🎮 Добро пожаловать в QuestChronicle!\n\n"
             "Для начала игры, пожалуйста, введите ваше имя:"
         )
         return REGISTER_NAME
@@ -38,7 +36,7 @@ async def register_name(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_manager.register_user(user_id, user_name)
 
     await update.message.reply_text(
-        f" Отлично, {user_name}! Регистрация завершена.\n"
+        f"✅ Отлично, {user_name}! Регистрация завершена.\n"
         f"Используйте /help для списка команд.\n\n"
         f"Давайте начнем ваше приключение!"
     )
@@ -50,7 +48,7 @@ async def register_name(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Обработчик команды /help"""
     help_text = (
-        " **QuestChronicle - Текстовый квест**\n\n"
+        "🎮 **QuestChronicle - Текстовый квест**\n\n"
         "**Доступные команды:**\n"
         "/start - Начать или продолжить игру\n"
         "/help - Показать это сообщение\n"
@@ -77,10 +75,10 @@ async def status_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     inventory_text = ", ".join(user["inventory"]) if user["inventory"] else "пусто"
 
     status_text = (
-        f" **Статус игрока:** {user['user_name']}\n\n"
-        f" Очки: {user['points']}\n"
-        f" Инвентарь: {inventory_text}\n"
-        f" Текущая локация: {user['current_scene']}"
+        f"📊 **Статус игрока:** {user['user_name']}\n\n"
+        f"💯 Очки: {user['points']}\n"
+        f"🎒 Инвентарь: {inventory_text}\n"
+        f"📍 Текущая локация: {user['current_scene']}"
     )
     await update.message.reply_text(status_text)
 
@@ -91,7 +89,7 @@ async def reset_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_manager.reset_user(user_id)
 
     await update.message.reply_text(
-        " Ваш прогресс сброшен! Используйте /start чтобы начать новое приключение."
+        "🔄 Ваш прогресс сброшен! Используйте /start чтобы начать новое приключение."
     )
 
 
@@ -109,6 +107,7 @@ async def show_scene(update: Update, context: ContextTypes.DEFAULT_TYPE, user=No
     available_choices = []
 
     for choice in scene["choices"]:
+
         if "requires" in choice:
             if choice["requires"] in user["inventory"]:
                 available_choices.append(choice)
@@ -116,6 +115,8 @@ async def show_scene(update: Update, context: ContextTypes.DEFAULT_TYPE, user=No
         else:
             available_choices.append(choice)
             choices.append(choice["text"])
+
+
     context.user_data["available_choices"] = available_choices
 
     reply_markup = get_scene_keyboard(choices)
@@ -146,6 +147,7 @@ async def handle_choice(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 
         user_manager.update_user_scene(user_id, next_scene_id, next_scene_data)
+
 
         await show_scene(update, context)
     else:
