@@ -1,0 +1,22 @@
+{
+  "1176302005": {
+    "user_name": "андрей",
+    "current_scene": "start",
+    "inventory": [],
+    "points": 0,
+    "registered": true
+  },
+  "796432640": {
+    "user_name": "Жопа",
+    "current_scene": "start",
+    "inventory": [
+      "Меч",
+      "Меч",
+      "Золотые монеты (10)",
+      "Меч",
+      "Золотые монеты (10)"
+    ],
+    "points": 155,
+    "registered": true
+  }
+}
